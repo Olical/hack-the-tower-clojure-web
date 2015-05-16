@@ -1,5 +1,6 @@
 (ns webdev.core
   (require [ring.adapter.jetty :as jetty]
+           [ring.middleware.reload :refer [wrap-reload]]
            [compojure.core :refer :all]
            [compojure.route :as route]))
 
@@ -18,12 +19,12 @@
 (defn calc
   "Calculates things"
   [a op b]
-  (let [f (get operands op)]
+  ((let [f (get operands op)]
     (if f
       {:status 200
        :body (str (f a b))}
       {:status 404
-       :body "Operator not found"})))
+       :body "Operator not found"}))))
 
 (defroutes app
   (GET "/" [] greet)
@@ -32,5 +33,5 @@
 (defn -main
   "Dev server, reloads"
   [port-number]
-  (jetty/run-jetty app
+  (jetty/run-jetty (wrap-reload #'app)
                    {:port (Integer. port-number)}))
