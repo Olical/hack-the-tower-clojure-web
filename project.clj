@@ -6,4 +6,6 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [ring "1.4.0-beta2"]
                  [compojure "1.3.4"]]
+  :min-lein-version "2.0.0"
+  :uberjar-name "webdev.jar"
   :main webdev.core)

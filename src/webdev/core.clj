@@ -1,6 +1,5 @@
 (ns webdev.core
   (require [ring.adapter.jetty :as jetty]
-           [ring.middleware.reload :refer [wrap-reload]]
            [compojure.core :refer :all]
            [compojure.route :as route]))
 
@@ -33,5 +32,5 @@
 (defn -main
   "Dev server, reloads"
   [port-number]
-  (jetty/run-jetty (wrap-reload #'app)
+  (jetty/run-jetty app
                    {:port (Integer. port-number)}))
