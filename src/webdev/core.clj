@@ -14,12 +14,6 @@
   (GET "/" [] greet))
 
 (defn -main
-  "Simple Ring / Jetty server"
-  [port-number]
-  (jetty/run-jetty app
-                   {:port (Integer. port-number)}))
-
-(defn -dev-main
   "Dev server, reloads"
   [port-number]
   (jetty/run-jetty (wrap-reload #'app)
