@@ -1,8 +1,11 @@
 (ns webdev.core
+  (require [webdev.item.model :as items])
   (require [ring.adapter.jetty :as jetty]
            [ring.middleware.reload :refer [wrap-reload]]
            [compojure.core :refer :all]
            [compojure.route :as route]))
+
+(def db (System/getenv "DATABASE_URL"))
 
 (defn greet
   "Greets stuff"
@@ -33,5 +36,6 @@
 (defn -main
   "Dev server, reloads"
   [port-number]
+  (items/create-table db)
   (jetty/run-jetty (wrap-reload #'app)
                    {:port (Integer. port-number)}))
