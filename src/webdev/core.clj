@@ -10,8 +10,25 @@
   {:status 200
    :body "Hello, World!"})
 
+(def operands
+  {"+" +
+   "-" -
+   "*" *
+   ":" /})
+
+(defn calc
+  "Calculates things"
+  [a op b]
+  (let [f (get operands op)]
+    (if f
+      {:status 200
+       :body (str (f a b))}
+      {:status 404
+       :body "Operator not found"})))
+
 (defroutes app
-  (GET "/" [] greet))
+  (GET "/" [] greet)
+  (GET "/calc/:a/:op/:b" [a op b] (calc (bigint a) op (bigint b))))
 
 (defn -main
   "Dev server, reloads"
